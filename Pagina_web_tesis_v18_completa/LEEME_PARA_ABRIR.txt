@@ -1,0 +1,9 @@
+PÁGINA WEB DE TESIS — VERSIÓN 18
+
+1. Descomprime este ZIP.
+2. Abre index.html en Chrome, Safari o Edge para revisar la página.
+3. En Herramientas, el mapa vuelve a ser de Google Maps, como en la versión anterior. Se necesita internet para verlo.
+4. El selector cambia la búsqueda del mapa según “Toda Bogotá” o la localidad elegida. Google elige qué resultados aparecen; no representa un listado completo. Para más detalles utiliza el botón de búsqueda externa.
+5. Cuando publiques, sube toda la carpeta (incluido _worker.js) a Cloudflare Pages.
+6. La IA pública solo funcionará cuando configures OPENAI_API_KEY como secreto en Cloudflare Pages y tengas facturación habilitada en OpenAI; antes de eso se usan respuestas educativas locales de respaldo.
+7. Los PDF del IDPYBA deben permanecer junto a index.html.

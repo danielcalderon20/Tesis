@@ -1,0 +1,61 @@
+ANTES DE BUSCAR COMPAÑÍA, APRENDE A ACOMPAÑAR — VERSIÓN 18
+Guía de uso local y publicación con IA pública
+
+1. ABRIR LA PÁGINA EN TU COMPUTADOR
+- Descomprime el ZIP.
+- Abre index.html con Chrome, Safari o Firefox (doble clic).
+- Si el visor de ChatGPT muestra líneas de HTML, no significa que esté dañada: abre el archivo en un navegador.
+- Sin dominio ni clave API, el asistente ya responde con orientaciones locales (sin IA externa), basadas en los temas de la campaña y la tesis.
+- Las fotos, la autoevaluación y las descargas de Excel/plan están integradas en el HTML.
+- Los mapas, enlaces a organizaciones y fuentes necesitan internet.
+
+2. QUÉ HACE EL MAPA
+- El mapa de la pestaña Herramientas vuelve a usar la vista de Google Maps solicitada, con calles, lugares y resultados de veterinarias.
+- Al seleccionar “Toda Bogotá” se solicita una búsqueda general con un acercamiento amplio (zoom 10).
+- Al seleccionar una localidad, la búsqueda cambia a esa zona y utiliza un acercamiento mayor (zoom 13).
+- Google decide qué resultados presenta en el recuadro. No se puede garantizar la visualización de todos los establecimientos sin utilizar la API oficial de Google Maps con credenciales propias.
+- El mapa REQUIERE conexión a internet; si no aparece, utiliza el enlace de búsqueda externa incluido debajo.
+- Comprueba por teléfono la ubicación, horarios, especialidad y disponibilidad de urgencias antes de acudir.
+
+3. PUBLICAR LA WEB EN EL DOMINIO (CLOUDFLARE PAGES)
+Esta carpeta incluye _worker.js, un pequeño servicio de servidor que ofrece POST /api/preguntar y mantiene la clave privada fuera del HTML. No funciona con solo abrir index.html; necesita publicarse con ese soporte.
+
+Pasos para publicar:
+A. Crea una cuenta en https://dash.cloudflare.com/ y entra en Workers & Pages.
+B. Crea un proyecto Pages de subida directa (Direct Upload / drag & drop).
+C. Sube este ZIP o los archivos de esta carpeta, incluidos index.html y _worker.js, en la RAÍZ. _worker.js está soportado para Direct Upload; una carpeta /functions no se compila cuando se sube desde el panel.
+D. Comprueba primero la dirección gratuita de prueba terminada en pages.dev.
+E. Si tienes un dominio, vincúlalo al proyecto Pages siguiendo las instrucciones de Cloudflare.
+
+4. ACTIVAR LA INTELIGENCIA ARTIFICIAL PARA CUALQUIER VISITANTE
+No hace falta que el usuario inicie sesión en Claude. El servidor usa la API de OpenAI desde Cloudflare, nunca directamente desde el navegador.
+- Obtén una clave de API propia de OpenAI (https://platform.openai.com/api-keys). Requiere cuenta y facturación de API; no se incluye en ChatGPT Plus.
+- En el panel de Cloudflare abre tu proyecto Pages > Settings > Variables and Secrets > Add.
+- Nombre exacto: OPENAI_API_KEY
+- Valor: tu clave. Activa la opción Encrypt (secreto cifrado). No pongas la clave en HTML, CSS, JavaScript público, Git ni en el ZIP.
+- Guarda el secreto y crea un nuevo despliegue si el panel lo solicita.
+- Modelo predeterminado: gpt-6-luna, optimizado para consultas breves. Puedes sustituirlo configurando OPENAI_MODEL en el entorno si deseas otro modelo compatible.
+- Abre la página publicada, escribe una pregunta y comprueba que aparezca “Respuesta generada con inteligencia artificial”. Si hay un error o falta la clave, la web muestra “Orientación de respaldo” sin bloquear la interacción.
+
+5. LIMITAR COSTOS Y ABUSOS ANTES DE DIFUNDIR EL ENLACE
+- La API de OpenAI se cobra por uso. Define límites/alertas de gasto en el panel de API.
+- En Cloudflare configura reglas de límite de solicitudes (Rate Limiting) para /api/preguntar. Se recomiendan límites conservadores por IP según tráfico esperado y, si hay abuso, Turnstile u otra protección.
+- El servidor rechaza preguntas demasiado largas, limita los tokens de respuesta y no permite una clave en el navegador. Esto por sí solo no sustituye el límite de solicitudes público.
+
+6. ARCHIVOS INCLUIDOS
+- index.html: sitio completo, con fotos incrustadas, encuestas, mapa de Google Maps y orientación sin IA.
+- _worker.js: servidor seguro para responder preguntas cuando se active la clave en Cloudflare Pages.
+- IDPYBA.pdf e IDPYBA_2.pdf: documentos educativos enlazados desde el sitio.
+- INSTRUCCIONES_PUBLICACION_V16.txt: esta guía.
+
+7. LÍMITES ACTUALES
+- No se ha publicado la página ni activado una clave de API en esta entrega.
+- La búsqueda comunitaria de veterinarias y las baldosas de OpenStreetMap dependen de servicios externos e internet. El encuadre y el cambio de localidades se probaron también con datos simulados; no se puede garantizar la disponibilidad de todos los puntos en cualquier momento.
+- La IA no reemplaza a un veterinario; las recomendaciones son educativas.
+- Las fotografías de terceros proporcionadas por la usuaria o usadas como referencia pueden requerir revisión de derechos para publicarlas públicamente.
+
+Fuentes técnicas:
+https://developers.cloudflare.com/pages/get-started/direct-upload/
+https://developers.cloudflare.com/pages/functions/advanced-mode/
+https://developers.cloudflare.com/pages/functions/bindings/
+https://developers.openai.com/api/reference/resources/responses/methods/create
